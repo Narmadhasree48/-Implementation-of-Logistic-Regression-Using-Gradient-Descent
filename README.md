@@ -1,130 +1,104 @@
-# Implementation-of-Logistic-Regression-Using-Gradient-Descent
+# Implementation-of-Linear-Regression-Using-Gradient-Descent
 
 ## AIM:
-To write a program to implement the the Logistic Regression Using Gradient Descent.
+To write a program to predict the profit of a city using the linear regression model with gradient descent.
 
 ## Equipments Required:
 1. Hardware – PCs
 2. Anaconda – Python 3.7 Installation / Jupyter notebook
 
 ## Algorithm
-1. Load the dataset into a Pandas DataFrame, drop unnecessary columns, and encode categorical variables into numerical values.
-2. Define the sigmoid() function to map any real-valued number to a value between 0 and 1 using the logistic function.
-3. Implement the loss() function to calculate the logistic loss (log loss), which measures how well the logistic model fits the data.
-4. Perform gradient descent using the gradient_descent() function to iteratively update the model’s parameters (theta). The function minimizes the loss by adjusting the parameters over several iterations.
-5. Use the predict() function to compute predictions for both training data and new input data. Calculate the accuracy by comparing predicted values to actual values and print the model's accuracy and predictions.
-
-
+```
+1. Import the standard Libraries.
+2.Set variables for assigning dataset values.
+3.Import linear regression from sklearn.
+4.Assign the points for representing in the graph.
+```
 ## Program:
 ```
 /*
-Program to implement the the Logistic Regression Using Gradient Descent.
-Developed by: NARMADHA SREE S
-RegisterNumber: 212223240105
-*/
+Program to implement the linear regression using gradient descent.
+Developed by:JAGADEESH J
+RegisterNumber:212223110015
+
 from google.colab import drive
 drive.mount('/content/gdrive')
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler
+def linear_regression(x1,y,learning_rate=0.01,num_iters=1000):
+  x=np.c_[np.ones(len(x1)),x1]
+  theta=np.zeros(x.shape[1]).reshape(-1,1)
+  for c in range(num_iters):
+    predictions=(x).dot(theta).reshape(-1,1)
+    errors=(predictions-y).reshape(-1,1)
+    theta-=learning_rate*(1/len(x1))*x.T.dot(errors)
+    return theta 
+*/
 ```
-## Read the Dataset:
+## Dataset:
 ```
-a=pd.read_csv('/content/Placement_Data_Full_Class (1).csv')
+a=pd.read_csv('/content/gdrive/MyDrive/50_Startups.csv')
 a
 ```
 ## Output:
-![image](https://github.com/user-attachments/assets/cb81a177-2b4d-4139-b8b3-87896d323419)
-## Info :
+![image](https://github.com/user-attachments/assets/36c44145-16a6-4fa1-b74d-40d78f5b3064)
+![image](https://github.com/user-attachments/assets/2246898d-153f-4fc2-8b30-e228694bb9e4)
+
+
+
+## Head and Tail:
 ```
-a.head()
-a.tail()
+print(a.head())
+print(a.tail())
+```
+# Output:
+![image](https://github.com/user-attachments/assets/ad888cde-8c02-4cd2-97f3-d9c0e401d69d)
+
+## Information of Dataset:
+```
 a.info()
 ```
 ## Output:
+![image](https://github.com/user-attachments/assets/7520c762-2bc8-4c37-8aff-b9f6ea590b57)
 
-![Screenshot 2024-10-16 094514](https://github.com/user-attachments/assets/dc2d6eb9-e900-4c03-bf7a-6107d63e72ab)
-![Screenshot 2024-10-16 094655](https://github.com/user-attachments/assets/fdbc132c-9454-4142-b5c2-2d6fef972b89)
-![image](https://github.com/user-attachments/assets/9ad47c29-1ea9-4738-a858-c26db8ed6da9)
-
-## Drop unnecessary columns
-```
-a=a.drop(['sl_no'],axis=1)
-a
-```
-## Output:
-![Screenshot 2024-10-16 094934](https://github.com/user-attachments/assets/689b4970-82a2-48cb-80ad-f0f8742c1869)
-
-## Encoding Categorical Variables:
-```
-a['gender']=a['gender'].astype('category')
-a['ssc_b']=a['ssc_b'].astype('category')
-a['hsc_b']=a['hsc_b'].astype('category')
-a['hsc_s']=a['hsc_s'].astype('category')
-a['degree_t']=a['degree_t'].astype('category')
-a['workex']=a['workex'].astype('category')
-a['specialisation']=a['specialisation'].astype('category')
-a['status']=a['status'].astype('category')
-a.info()
-
-a['gender']=a['gender'].cat.codes
-a['ssc_b']=a['ssc_b'].cat.codes
-a['hsc_b']=a['hsc_b'].cat.codes
-a['hsc_s']=a['hsc_s'].cat.codes
-a['degree_t']=a['degree_t'].cat.codes
-a['workex']=a['workex'].cat.codes
-a['specialisation']=a['specialisation'].cat.codes
-a['status']=a['status'].cat.codes
-a.info()
-```
-## Output:
-![Screenshot 2024-10-16 095131](https://github.com/user-attachments/assets/492de0b1-f138-4ece-993d-fdaf91dd1105)
-![image](https://github.com/user-attachments/assets/c6a67e9c-c407-4c35-a9f6-196cccea0570)
-
-## Splitting Data:
+## x and y value:
 ```
 x=a.iloc[:,:-1].values
+print(x)
 y=a.iloc[:,-1].values
-```
-## Gradient Descent:
-```
-theta=np.random.randn(X.shape[1])
-y=Y
-def sigmoid(z):
-  return 1/(1+np.exp(-z))
-def loss(theta,X,y):
-  h=sigmoid(X.dot(theta))
-  return -np.sum(y*np.log(h)+ (1-y) * np.log(1-h))
-def gradient_descent(theta,X,y,alpha,num_iterations):
-  m=len(y)
-  for i in range(num_iterations):
-    h=sigmoid(X.dot(theta))
-    gradient=X.T.dot(h-y)/m
-    theta-=alpha*gradient
-  return theta
-theta=gradient_descent(theta,X,y,alpha=0.01,num_iterations=1000)
-def predict(theta,X):
-  h=sigmoid(X.dot(theta))
-  y_pred=np.where(h>=0.5 , 1,0)
-  return y_pred
-y_pred=predict(theta,X)
-accuracy=np.mean(y_pred.flatten()==y)
-print(accuracy*100)
-print(y_pred)
-```
-## Output :
-![Screenshot 2024-10-16 114214](https://github.com/user-attachments/assets/a0cb9c87-e2ec-4e8d-8e96-9dd49ee9eee6)
-
-## Prediction and Evaluation:
-```
-xnew=np.array([[0,87,0,95,0,2,78,2,0,0,1,0]])
-y_predn=predict(theta,xnew)
-print(y_predn)
-print(theta)
+print(y)
 ```
 ## Output:
-![Screenshot 2024-10-16 114403](https://github.com/user-attachments/assets/ab805222-996e-473e-bccc-d277b6790d04)
-![image](https://github.com/user-attachments/assets/969a5e07-9dc9-4f06-8fb9-2b93aa1766c9)
+![image](https://github.com/user-attachments/assets/449058e2-69c7-4a4b-817b-96f95251500b)
 
+## StandardScaler:
+```
+scaler=StandardScaler()
+x=scaler.fit_transform(x)
+print(x)
+y=y.reshape(-1,1)
+y=scaler.fit_transform(y)
+print(y)
+
+```
+## Output:
+![image](https://github.com/user-attachments/assets/2c4c43bc-da9d-44a0-93ac-f8439aea5850)
+
+## Final pridiction:
+```
+x1=x.astype(float)
+x1_scaled=scaler.fit_transform(x1)
+y1_scaled=scaler.fit_transform(y)
+theta=linear_regression(x1_scaled,y1_scaled)
+new_data=np.array([165349.2,136897.8,471784.1]).reshape(-1,1)
+new_scaled=scaler.fit_transform(new_data)
+prediction=np.dot(np.append(1,new_scaled),theta)
+prediction=prediction.reshape(-1,1)
+pre=scaler.inverse_transform(prediction)
+print(f"Predicted value:{pre}")
+```
+## Output:
+![image](https://github.com/user-attachments/assets/96d08bd6-7f9f-4dcb-8376-3a9f417ad6b3)
 ## Result:
-Thus the program to implement the the Logistic Regression Using Gradient Descent is written and verified using python programming.
+Thus the program to implement the linear regression using gradient descent is written and verified using python programming
