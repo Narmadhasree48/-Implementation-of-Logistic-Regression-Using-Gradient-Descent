@@ -125,9 +125,6 @@ print(theta)
 ## Output:
 ![Screenshot 2024-10-16 114403](https://github.com/user-attachments/assets/ab805222-996e-473e-bccc-d277b6790d04)
 ![image](https://github.com/user-attachments/assets/969a5e07-9dc9-4f06-8fb9-2b93aa1766c9)
-## Output:
-![logistic regression using gradient descent](sam.png)
-
 
 ## Result:
 Thus the program to implement the the Logistic Regression Using Gradient Descent is written and verified using python programming.
